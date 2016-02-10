@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sfphp</title>
+  <!-- Bootstrap Table -->
+  <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+  <script src="resumable.js"></script>
+  <script src="loader.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav>
+  <ul class="pager">
+    <li class="previous"><a href="#" id="browseButton">Subir archivo(s)</a></li>
+    <li class="next"><a href="cargas.php">Lista</a></li>
+  </ul>
+</nav>
+<script>
+var r = new Resumable({
+  target:'carga.php'
+});
+  
+r.assignBrowse(document.getElementById('browseButton'));
+
+r.on('fileSuccess', function(file){
+    console.debug('Archivo cargado',file);
+  });
+r.on('fileProgress', function(file){
+    console.debug('Archivo en progreso', file);
+  });
+r.on('fileAdded', function(file, event){
+    r.upload();
+    console.debug('Archivo en fila', event);
+  });
+r.on('filesAdded', function(array){
+    r.upload();
+    console.debug('Archivos en fila', array);
+  });
+r.on('fileRetry', function(file){
+    console.debug(file);
+  });
+r.on('fileError', function(file, message){
+    console.debug('Error de archivo', file, message);
+  });
+r.on('uploadStart', function(){
+    console.debug('Empieza carga');
+    loader.show();
+  });
+r.on('complete', function(){
+    console.debug('Terminado');
+    loader.hide();
+  });
+r.on('progress', function(){
+    console.debug('...procesando...');
+  });
+r.on('error', function(message, file){
+    console.debug('ERROR', message, file);
+  });
+r.on('pause', function(){
+    console.debug('pausa');
+  });
+r.on('cancel', function(){
+    console.debug('cancelar');
+  });
+</script>
+
+
+
