@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sfphp</title>
+  <title>carga de archivos</title>
   <!-- Bootstrap Table -->
   <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
   <script src="resumable.js"></script>
