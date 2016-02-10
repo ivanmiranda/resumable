@@ -1,6 +1,24 @@
-<a href="#" id="browseButton">Subir archivo</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>carga de archivos</title>
+  <!-- Bootstrap Table -->
+  <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+  <script src="resumable.js"></script>
+  <script src="loader.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
 
-<script src="resumable.js"></script>
+<nav>
+  <ul class="pager">
+    <li class="previous"><a href="#" id="browseButton">Subir archivo(s)</a></li>
+    <li class="next"><a href="cargas.php">Lista</a></li>
+  </ul>
+</nav>
 <script>
 var r = new Resumable({
   target:'carga.php'
@@ -9,44 +27,47 @@ var r = new Resumable({
 r.assignBrowse(document.getElementById('browseButton'));
 
 r.on('fileSuccess', function(file){
-    console.debug('fileSuccess',file);
+    console.debug('Archivo cargado',file);
   });
 r.on('fileProgress', function(file){
-    console.debug('fileProgress', file);
+    console.debug('Archivo en progreso', file);
   });
 r.on('fileAdded', function(file, event){
     r.upload();
-    console.debug('fileAdded', event);
+    console.debug('Archivo en fila', event);
   });
 r.on('filesAdded', function(array){
     r.upload();
-    console.debug('filesAdded', array);
+    console.debug('Archivos en fila', array);
   });
 r.on('fileRetry', function(file){
     console.debug(file);
   });
 r.on('fileError', function(file, message){
-    console.debug('fileError', file, message);
+    console.debug('Error de archivo', file, message);
   });
 r.on('uploadStart', function(){
-    console.debug('uploadStart');
+    console.debug('Empieza carga');
+    loader.show();
   });
 r.on('complete', function(){
-    console.debug('complete');
+    console.debug('Terminado');
+    loader.hide();
   });
 r.on('progress', function(){
-    console.debug('progress');
+    console.debug('...procesando...');
   });
 r.on('error', function(message, file){
-    console.debug('error', message, file);
+    console.debug('ERROR', message, file);
   });
 r.on('pause', function(){
-    console.debug('pause');
+    console.debug('pausa');
   });
 r.on('cancel', function(){
-    console.debug('cancel');
+    console.debug('cancelar');
   });
 </script>
+
 
 
 
