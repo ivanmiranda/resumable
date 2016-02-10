@@ -13,6 +13,6 @@
 </head>
 <body>
 <?php
-foreach(glob($log_directory.'./temp/*.*') as $file) {
+foreach(glob('./temp/*.*') as $file) {
     echo "<a href='".$file."'>".str_replace("./temp/", "", $file)." (".number_format(((filesize($file)/1024)/1024),2)."MB)</a><br>";
 }
