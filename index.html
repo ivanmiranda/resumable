@@ -14,13 +14,54 @@
 </head>
 <body>
 
-<nav>
-  <ul class="pager">
-    <li class="previous"><a href="#" id="browseButton">Carga directa de archivo(s)</a></li>
-    <li class="next"><a href="cargas.php">Lista</a></li>
-  </ul>
-</nav>
-<script>
+<div class="page-header">
+  <h1>Demo de carga asincrona <small> y previo de imagen sin carga de imagen</small></h1>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 col-md-12">
+      <div class="list-group">
+          <button type="button" class="list-group-item list-group-item-success" id="browseButton">Carga directa de archivo(s)</button>
+           <button type="button" class="list-group-item list-group-item-info" onclick="document.location.href='cargas.php'">Lista de cargas</button>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-12">
+      <div class="thumbnail">
+        <img class="media-object" src="" id="456" alt="Previo...">
+        <br>
+        <input type="file" class="filestyle" data-buttonText="Seleccionar archivo" data-buttonName="btn-primary" data-badge="false" id="123"><br>
+        <button type="button" class="btn btn-primary" onclick="manual()">Carga manual</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+function readURL(input) {
+  loader.show();
+  $('#456').attr('src', '')
+  $('#456').attr('alt', 'cargando previo...')
+  if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      
+      reader.onload = function (e) {
+          $('#456').attr('src', e.target.result);
+          loader.hide();
+      }
+      
+      reader.readAsDataURL(input.files[0]);
+  }
+}
+
+$("#123").change(function(){
+  readURL(this);
+});
+
+function manual() {
+  r.addFile($("#123").get(0).files[0])
+}
+
 var r = new Resumable({
   target:'carga.php'
 });
@@ -67,34 +108,4 @@ r.on('pause', function(){
 r.on('cancel', function(){
     console.debug('cancelar');
   });
-</script>
-
-<img src="" id="456" height="200" width="200" alt="Previo..."><br><br>
-<input type="file" class="filestyle" data-buttonText="Seleccionar archivo" data-buttonName="btn-primary" data-badge="false" id="123"><br>
-<button type="button" class="btn btn-primary" onclick="manual()">Carga manual</button>
-
-<script type="text/javascript">
-function readURL(input) {
-  loader.show();
-  $('#456').attr('src', '')
-  $('#456').attr('alt', 'cargando previo...')
-  if (input.files && input.files[0]) {
-      var reader = new FileReader();
-      
-      reader.onload = function (e) {
-          $('#456').attr('src', e.target.result);
-          loader.hide();
-      }
-      
-      reader.readAsDataURL(input.files[0]);
-  }
-}
-
-$("#123").change(function(){
-  readURL(this);
-});
-
-function manual() {
-  r.addFile($("#123").get(0).files[0])
-}
 </script>
